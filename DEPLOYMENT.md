@@ -1,6 +1,6 @@
 # Deployment Guide
 
-## Локальная Настройка (Development)
+## Локальная Настройка
 
 ### Рекомендации
 
@@ -17,15 +17,15 @@ docker-compose up -d
  docker-compose ps
 ```
 
-## Производственная Настройка (Production)
+## Production
 
 ### Минимальные Рекомендации
 
 - **PostgreSQL**: Отдельный сервер
 - **Kafka**: Кластер деталяю до 3-чные брокеры
-- **API**: 2-4 реплики за ладонью / группию
+- **API**: 2-4 
 - **Orchestrator**: 2 экземпляра
-- **Runner**: Маслтабируемая выпуск
+- **Runner**: Масштабируемый выпуск
 
 ### Kubernetes Deployment
 
@@ -54,13 +54,13 @@ spec:
           value: kafka-cluster:9092
 ```
 
-### Мониторинг и Логки
+### Мониторинг и Логи
 
 - **Prometheus**: Осталометры (latency, throughput)
 - **ELK Stack**: Логи даоснения
 - **Grafana**: Dashboards
 
-## Хлады Ошибки
+## Ошибки
 
 - **Recovery**: Leader election для Orchestrator
 - **Failover**: Health checks для всех сервисов
