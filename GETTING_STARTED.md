@@ -1,4 +1,4 @@
-# Video Analytics Platform - Он Начинающих
+# Video Analytics Platform 
 
 ## Шаг 1: Клонирование и Подготовка
 
