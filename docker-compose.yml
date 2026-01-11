@@ -21,7 +21,7 @@ services:
     networks:
       - vap-network
 
-  # Zookeeper (required for Kafka)
+  # Zookeeper (for Kafka)
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     container_name: vap-zookeeper
@@ -66,7 +66,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # Kafka UI (optional, for monitoring)
+  # Kafka UI (for monitoring)
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: vap-kafka-ui
@@ -148,7 +148,6 @@ services:
     networks:
       - vap-network
     command: python -m runner.main
-    # Note: multiprocessing may have limitations in Docker, but this works for development
 
 networks:
   vap-network:
