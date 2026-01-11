@@ -5,14 +5,14 @@
 ## 📋 Архитектура
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     EXTERNAL CLIENTS (Users)                    │
+│                           Users                                 │
 │                      HTTP/REST Requests                         │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                        LOAD BALANCER                            │
-│                   (Optional in production)                      │
+│                                                                 │
 └────────────────────────────┬────────────────────────────────────┘
                              │
         ┌────────────────────┼────────────────────┐
@@ -31,7 +31,7 @@
         ▼                   ▼                   ▼
 ┌──────────────┐   ┌────────────────┐   ┌──────────────┐
 │   PostgreSQL │   │  Apache Kafka  │   │  Redis/Cache │
-│   (Primary)  │   │   (3 brokers)  │   │  (Optional)  │
+│   (Primary)  │   │   (3 brokers)  │   │              │
 └──────────────┘   └────────────────┘   └──────────────┘
         │                   │
         │                   │
@@ -42,7 +42,7 @@
         ▼           ▼           ▼
   ┌───────────┐ ┌───────────┐ ┌─────────────┐
   │Orchestr.  │ │Orchestr.  │ │ Orchestr.   │
-  │Instance 1 │ │Instance 2 │ │ (Standby)   │
+  │Instance 1 │ │Instance 2 │ │             │
   └───────┬───┘ └───────┬───┘ └─────────────┘
           │             │
           └──────┬──────┘
@@ -85,13 +85,13 @@ PostgreSQL
 scenario_results
 ```
 
-## 🏗️ Компоненты
+## Компоненты
 
 ### 1. **API Service** (`api/`)
 - `POST /api/v1/scenario/init` - инициализация нового сценария
 - `GET /api/v1/prediction/{scenario_uuid}` - получение результатов
-- Использует Outbox паттерн для гарантированной доставки сообщений
-- Сохраняет сценарии в PostgreSQL
+- Outbox паттерн для гарантированной доставки сообщений
+- Сохраняем сценарии в PostgreSQL
 
 **Таблицы:**
 - `scenarios` - информация о сценариях
@@ -113,7 +113,7 @@ scenario_results
 - Выполняет инференс (mock detection)
 - Публикует результаты в `results` топик
 
-## 🚀 Быстрый старт
+## Быстрый старт
 
 ### Требования
 - Python 3.9+
@@ -156,8 +156,7 @@ docker run -d -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=localhost:2181 confluentin
 ```bash
 cd api
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# или venv\Scripts\activate (Windows)
+source venv/bin/activate 
 pip install -r requirements.txt
 python -m uvicorn app.main:app --reload --port 8000
 ```
@@ -184,7 +183,7 @@ pip install -r requirements.txt
 python -m runner.main
 ```
 
-## 📊 System Specification
+## System Specification
 
 ### Жизненный цикл сценария
 
@@ -263,7 +262,7 @@ CREATE TABLE workers (
 );
 ```
 
-## 🧪 Testing Guide
+## Testing Guide
 
 ### 1. Unit Tests
 
@@ -335,7 +334,7 @@ kafka-console-consumer --bootstrap-server localhost:9092 --topic init_scenario -
 kafka-console-producer --bootstrap-server localhost:9092 --topic to_deploy
 ```
 
-## 📁 Структура проекта
+## Структура проекта
 
 ```
 video-analytics-platform/
@@ -393,7 +392,7 @@ video-analytics-platform/
 └── README.md
 ```
 
-## 🔄 Гарантии доставки
+## Гарантии доставки
 
 ### Outbox Pattern (API → Kafka)
 - Запись в `scenarios` и `outbox_scenario` выполняется в одной транзакции
@@ -405,7 +404,7 @@ video-analytics-platform/
 - Проверка на дубликат перед обработкой
 - Результаты хранятся с `scenario_uuid` как ключом уникальности
 
-## 📝 Демонстрация преподавателю
+## Демонстрация преподавателю
 
 ### Сценарий демо (5-10 минут)
 
@@ -439,14 +438,14 @@ video-analytics-platform/
 
 ### Что демонстрирует
 
-✅ Асинхронная обработка (Kafka)  
-✅ Управление жизненным циклом (State Machine)  
-✅ Масштабируемость (multiprocessing)  
-✅ Reliability (Transactional Outbox, идемпотентный Inbox)  
-✅ Микросервисная архитектура  
-✅ Полная трассировка данных
+Асинхронная обработка (Kafka)  
+Управление жизненным циклом (State Machine)  
+Масштабируемость (multiprocessing)  
+Reliability (Transactional Outbox, идемпотентный Inbox)  
+Микросервисная архитектура  
+Полная трассировка данных
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 | Проблема | Решение |
 |----------|---------|
@@ -456,13 +455,13 @@ video-analytics-platform/
 | Worker не запускается | Проверить URL видеопотока, смотреть логи runner |
 | Результаты не появляются | Проверить логи orchestrator и runner, Kafka топики |
 
-## 📚 Дополнительная документация
+## Дополнительная документация
 
 - [API Documentation](api/README.md)
 - [Orchestrator Documentation](orchestrator/README.md)
 - [Runner Documentation](runner/README.md)
 
-## 🔐 Переменные окружения
+## Переменные окружения
 
 Все сервисы используют `.env` файлы. Примеры в каждой папке сервиса.
 
@@ -471,11 +470,3 @@ DATABASE_URL=postgresql://user:password@localhost:5432/vap_db
 KAFKA_BOOTSTRAP_SERVERS=localhost:9092
 LOG_LEVEL=INFO
 ```
-
-## 📄 Лицензия
-
-MIT
-
----
-
-**Разработано для курса по распределённым системам**
