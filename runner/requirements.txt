@@ -1,0 +1,5 @@
+kafka-python==2.0.2
+opencv-python==4.8.1.78
+numpy==1.24.3
+python-dotenv==1.0.0
+uuid6==1.0.3
