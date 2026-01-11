@@ -1,4 +1,4 @@
--- Create scenarios table
+-- scenarios table
 CREATE TABLE IF NOT EXISTS scenarios (
     id SERIAL PRIMARY KEY,
     scenario_uuid UUID UNIQUE NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS scenarios (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- Create outbox_scenario table (transactional outbox pattern)
+-- outbox_scenario table 
 CREATE TABLE IF NOT EXISTS outbox_scenario (
     id SERIAL PRIMARY KEY,
     scenario_uuid UUID NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS outbox_scenario (
     published_at TIMESTAMP
 );
 
--- Create scenario_results table
+-- scenario_results table
 CREATE TABLE IF NOT EXISTS scenario_results (
     id SERIAL PRIMARY KEY,
     scenario_uuid UUID NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS scenario_results (
     UNIQUE(scenario_uuid, frame_number)
 );
 
--- Create workers table
+-- workers table
 CREATE TABLE IF NOT EXISTS workers (
     id SERIAL PRIMARY KEY,
     worker_id UUID UNIQUE NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS workers (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- Create indices
+-- indices
 CREATE INDEX IF NOT EXISTS idx_scenarios_uuid ON scenarios(scenario_uuid);
 CREATE INDEX IF NOT EXISTS idx_scenarios_status ON scenarios(status);
 CREATE INDEX IF NOT EXISTS idx_outbox_published ON outbox_scenario(published);
