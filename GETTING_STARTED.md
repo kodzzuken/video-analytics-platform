@@ -1,5 +1,20 @@
 # Video Analytics Platform 
 
+```bash
+# 1. Клонировать
+git clone https://github.com/kodzzuken/video-analytics-platform.git
+cd video-analytics-platform
+
+# 2. Открыть в VS Code
+code .
+
+# 3. Запустить проект
+docker-compose up -d
+
+# 4. Проверить работу
+docker-compose ps
+```
+
 ## Шаг 1: Клонирование и Подготовка
 
 ```bash
