@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, JSONB, UUID
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, UUID
+from sqlalchemy.dialects.postgresql import JSONB  # ← ПРАВИЛЬНЫЙ ИМПОРТ!
 from sqlalchemy.sql import func
 from app.database import Base
 import uuid
@@ -17,7 +18,7 @@ class Scenario(Base):
         from_attributes = True
 
 class OutboxScenario(Base):
-    __tablename__ = "outbox_scenario"
+    __tablename__ = "outbox_scenarios"  # ← МНОЖЕСТВЕННОЕ ЧИСЛО!
 
     id = Column(Integer, primary_key=True, index=True)
     scenario_uuid = Column(UUID(as_uuid=True), nullable=False)
@@ -41,3 +42,4 @@ class ScenarioResult(Base):
 
     class Config:
         from_attributes = True
+
