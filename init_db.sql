@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS scenarios (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- outbox_scenario table 
-CREATE TABLE IF NOT EXISTS outbox_scenario (
+-- outbox_scenarios table (ПРАВИЛЬНОЕ ИМЯ - множественное число!)
+CREATE TABLE IF NOT EXISTS outbox_scenarios (
     id SERIAL PRIMARY KEY,
     scenario_uuid UUID NOT NULL,
     payload JSONB NOT NULL,
@@ -44,7 +44,8 @@ CREATE TABLE IF NOT EXISTS workers (
 -- indices
 CREATE INDEX IF NOT EXISTS idx_scenarios_uuid ON scenarios(scenario_uuid);
 CREATE INDEX IF NOT EXISTS idx_scenarios_status ON scenarios(status);
-CREATE INDEX IF NOT EXISTS idx_outbox_published ON outbox_scenario(published);
+CREATE INDEX IF NOT EXISTS idx_outbox_published ON outbox_scenarios(published);
 CREATE INDEX IF NOT EXISTS idx_results_uuid ON scenario_results(scenario_uuid);
 CREATE INDEX IF NOT EXISTS idx_workers_scenario ON workers(scenario_uuid);
 CREATE INDEX IF NOT EXISTS idx_workers_status ON workers(status);
+
